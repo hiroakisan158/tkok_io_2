@@ -1,10 +1,11 @@
-//const httpServer = require("http").createServer();
-const httpsServer = require("https").createServer();
-const io = require("socket.io")(httpsServer, {
+const httpServer = require("http").createServer();
+const io = require("socket.io")(httpServer, {
   cors: {
     //origin: "http://127.0.0.1:8080",
     origin: "*",
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
   }
 });
 

@@ -3,9 +3,16 @@ const MY_SNAKE_COLOR = '#1E90FF'
 const OTHER_SNAKE_COLOR = '#c2c2c2'
 const FOOD_COLOR = '#e66916'
 
+import io from "socket.io-client";
+
 //////////////////change when testing localy //////////////////
 //const socket = io('http://localhost:3000'); //url connect to in local
-const socket = io('https://young-waters-66974.herokuapp.com/');  //url connect to heroku server
+const socket = io('https://young-waters-66974.herokuapp.com/', {
+  withCredentials: true,
+  extraHeaders: {
+    "my-custom-header": "abcd"
+  }
+});  //url connect to heroku server
 //////////////////////////////////////////////////////////
 
 socket.on('gameState', handleGameState);

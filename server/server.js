@@ -1,6 +1,6 @@
-//const io = require('socket.io')();
-const httpServer = require("http").createServer();
-const io = require("socket.io")(httpServer, {
+//const httpServer = require("http").createServer();
+const httpsServer = require("https").createServer();
+const io = require("socket.io")(httpsServer, {
   cors: {
     //origin: "http://127.0.0.1:8080",
     origin: "*",

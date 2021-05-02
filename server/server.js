@@ -1,4 +1,13 @@
-const io = require('socket.io')();
+//const io = require('socket.io')();
+const httpServer = require("http").createServer();
+const io = require("socket.io")(httpServer, {
+  cors: {
+    origin: ["https://stoic-jackson-807da6.netlify.app/",
+            "http://127.0.0.1:8080"],
+    methods: ["GET", "POST"]
+  }
+});
+
 const Game = require('./game'); //import gamestate from game.js file
 
 const game = new Game();

@@ -3,8 +3,8 @@ const httpServer = require("http").createServer();
 //////////////////change when testing localy //////////////////
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: "http://127.0.0.1:8080",
-    //origin: "https://stoic-jackson-807da6.netlify.app",
+    //origin: "http://127.0.0.1:8080",
+    origin: "https://stoic-jackson-807da6.netlify.app",
     methods: ["GET", "POST"],
   }
 });

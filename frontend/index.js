@@ -7,8 +7,8 @@ const FOOD_COLOR = '#e66916'
 
 
 //////////////////change when testing localy //////////////////
-const socket = io('http://localhost:3000'); //url connect to in local
-//const socket = io('https://young-waters-66974.herokuapp.com/');  //url connect to heroku server
+//const socket = io('http://localhost:3000'); //url connect to in local
+const socket = io('https://young-waters-66974.herokuapp.com/');  //url connect to heroku server
 //////////////////////////////////////////////////////////
 
 socket.on('gameState', handleGameState);

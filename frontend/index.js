@@ -1,11 +1,14 @@
 const BG_COLOR = '#231f20'
-const MY_SNAKE_COLOR = '#1E90FF'
-const OTHER_SNAKE_COLOR = '#c2c2c2'
+//randomly choose snake color from snake_color_array
+const snake_color_array = ['#1E90FF', '#c2c2c2', '#EE0000', '#CC66FF', '#00DD00'];
+const MY_SNAKE_COLOR = snake_color_array[Math.floor(Math.random() * snake_color_array.length)]
+//const OTHER_SNAKE_COLOR = '#c2c2c2'
 const FOOD_COLOR = '#e66916'
 
+
 //////////////////change when testing localy //////////////////
-//const socket = io('http://localhost:3000'); //url connect to in local
-const socket = io('https://young-waters-66974.herokuapp.com/');  //url connect to heroku server
+const socket = io('http://localhost:3000'); //url connect to in local
+//const socket = io('https://young-waters-66974.herokuapp.com/');  //url connect to heroku server
 //////////////////////////////////////////////////////////
 
 socket.on('gameState', handleGameState);
@@ -26,12 +29,15 @@ newGameBtn.addEventListener('click', newGame); //user's click initiate the funct
 retryGameBtn.addEventListener('click', retryGame); //when user click retry button 
 
 function newGame(){
-  socket.emit('newGame', usernameInput);
+  socket.emit('newGame', JSON.stringify({
+    "username" : usernameInput.value,
+    "usercolor" : MY_SNAKE_COLOR
+  }));
   init();
 }
 
 function retryGame(){
-  socket.emit('retryGame', reusernameInput);
+  socket.emit('retryGame', reusernameInput.value);
   init();
 }
 
@@ -75,12 +81,12 @@ function paintGame(state){
     paintFood(food, size, FOOD_COLOR);
 
     //paint me
-    paintPlayer(state.me, size, MY_SNAKE_COLOR)
+    paintPlayer(state.me, size, state.me.color)
 
     //paint all others
     for (let key of Object.keys(state.others)){
       //fill the player(snake) color. the snake color depends on the number of cell.
-      paintPlayer(state.others[key], size, OTHER_SNAKE_COLOR); 
+      paintPlayer(state.others[key], size, state.others[key].color); 
     }
     
     gameSnakeSizeDisplay.innerText = state.me.snakesize //show snakesize under the canvas

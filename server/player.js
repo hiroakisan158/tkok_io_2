@@ -2,9 +2,10 @@ const { GRID_SIZE } = require('./constants');
 
 
 class Player {
-    constructor(id, username) {
+    constructor(id, username, usercolor) {
         this.id = id;
         this.username = username;
+        this.color = usercolor;
         this.pos = {
             x: 3,
             y: 10,
@@ -82,8 +83,12 @@ class Player {
     //this method define the movement of a food eaten by snake
     randomFood(state, i) {
         //randomly replace a food around canvas when snake eat one of food
-        state.food[i].x = Math.floor(Math.random() * GRID_SIZE);
-        state.food[i].y = Math.floor(Math.random() * GRID_SIZE);
+        state.food[i].x = Math.floor(getRandomArbitrary(0.2, 0.8) * GRID_SIZE);
+        state.food[i].y = Math.floor(getRandomArbitrary(0.2, 0.8) * GRID_SIZE);
+
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+          }
     
         //not to make sure food shown above snake
         for (let clientid of Object.keys(state.players)){ //for each player's
@@ -104,6 +109,7 @@ class Player {
           vel: this.vel,
           snake: this.snake,
           snakesize: this.snakesize,
+          color: this.color,
         };
     }
 }  

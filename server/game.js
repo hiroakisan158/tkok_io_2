@@ -13,12 +13,12 @@ class Game {
 
 
   //this method is trigarred when user push "start game" button and create player instance for the new user
-  addPlayer(client, username){
+  addPlayer(client, username, usercolor){
     // add "sockets" array [key:client.id, value: client]. client is socket from client. It includes data about socket(e.g. socketid)
     this.sockets[client.id] = client;
 
     //add "players" array [key: client.id, value: Player_instance_for_the_client]. "players" array has all players' all info (e.g. username, location, length)
-    this.players[client.id] = new Player(client.id, username);
+    this.players[client.id] = new Player(client.id, username, usercolor);
   }
 
 
@@ -62,8 +62,12 @@ class Game {
 
     //set each food position
     function randomEachFood(state){
-      var x = Math.floor(Math.random() * GRID_SIZE);
-      var y = Math.floor(Math.random() * GRID_SIZE);
+      var x = Math.floor(getRandomArbitrary(0.2, 0.8) * GRID_SIZE);
+      var y = Math.floor(getRandomArbitrary(0.2, 0.8) * GRID_SIZE);
+
+      function getRandomArbitrary(min, max) {
+          return Math.random() * (max - min) + min;
+      }
 
       //check if the food is on snake body, and if it is on, randomize food again
       for (let clientid of Object.keys(state.players)){ //for each player's

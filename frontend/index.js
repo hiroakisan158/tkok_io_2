@@ -37,7 +37,10 @@ function newGame(){
 }
 
 function retryGame(){
-  socket.emit('retryGame', reusernameInput.value);
+  socket.emit('retryGame', JSON.stringify({
+    "username" : usernameInput.value,
+    "usercolor" : MY_SNAKE_COLOR
+  }));
   init();
 }
 

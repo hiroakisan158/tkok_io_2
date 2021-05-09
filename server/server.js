@@ -58,8 +58,10 @@ io.on('connection', client => {
     }
       
 
-    function handleRetryGame(username){
-      game.addPlayer(client, username);
+    function handleRetryGame(userinfo){
+      parsed_userinfo = JSON.parse(userinfo);
+      //console.log(parsed_userinfo);
+      game.addPlayer(client, parsed_userinfo.username, parsed_userinfo.usercolor);
     }
 
 });

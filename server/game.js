@@ -8,6 +8,7 @@ class Game {
     this.sockets = {};
     this.players = {};
     this.state = {}; 
+    this.topplayers = {};
     setInterval(this.update.bind(this), 1000 / FRAME_RATE);
   }
 
@@ -28,11 +29,23 @@ class Game {
     Object.keys(this.sockets).forEach(playerID => {
       const player = this.players[playerID];
       player.update(this.state);
+
+      //add or insert updated snakesize topplayers array [key: username, value: snakesize]
+      this.topplayers[player.username] = player.snakesize;
     });
 
     //Update state. 
     //state.players is used for detecting collision between each players
     this.state.players = this.players;
+
+    //Arrange topplayers objects in decending order
+    //topplayers is not array so change to array once and sort and back to object
+    var topplayers_array = Object.keys(this.topplayers).map((k)=>({ key: k, value: this.topplayers[k] }));
+    topplayers_array.sort((a, b) =>  b.value - a.value);
+
+    this.topplayers = Object.assign({}, ...topplayers_array.map((item) => ({
+      [item.key]: item.value,
+    })));
   
     // Check if any players are dead and if alive send player status to each player 
     Object.keys(this.sockets).forEach(playerID => {
@@ -84,6 +97,7 @@ class Game {
 
   removePlayer(socket) {
     delete this.sockets[socket.id];
+    delete this.topplayers[this.players[socket.id].username];
     delete this.players[socket.id];
   }
 
@@ -129,6 +143,7 @@ class Game {
       others: OtherPlayers.map(p => p.serializeForUpdate()),
       food: this.state.food,
       gridsize: GRID_SIZE,
+      top: this.topplayers,
     };
   }
 

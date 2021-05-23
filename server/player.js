@@ -105,6 +105,7 @@ class Player {
     serializeForUpdate() {
         return {
           id: this.id,
+          name: this.username,
           pos: this.pos,
           vel: this.vel,
           snake: this.snake,

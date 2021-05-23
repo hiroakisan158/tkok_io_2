@@ -23,7 +23,12 @@ const retryScreen = document.getElementById('retryScreen');
 const retryGameBtn = document.getElementById('retryGameButton');
 const usernameInput = document.getElementById('username-input');
 const reusernameInput = document.getElementById('reusername-input');
-
+const leaderbord1user = document.getElementById('Number1user');
+const leaderbord2user = document.getElementById('Number2user');
+const leaderbord3user = document.getElementById('Number3user');
+const leaderbord1score = document.getElementById('Number1score');
+const leaderbord2score= document.getElementById('Number2score');
+const leaderbord3score = document.getElementById('Number3score');
 
 newGameBtn.addEventListener('click', newGame); //user's click initiate the function newGame
 retryGameBtn.addEventListener('click', retryGame); //when user click retry button 
@@ -92,7 +97,17 @@ function paintGame(state){
       paintPlayer(state.others[key], size, state.others[key].color); 
     }
     
-    gameSnakeSizeDisplay.innerText = state.me.snakesize //show snakesize under the canvas
+    //show snakesize under the canvas
+    gameSnakeSizeDisplay.innerText = state.me.snakesize; 
+    topkeyarray = Object.keys(state.top);
+    leaderbord1score.innerText = state.top[topkeyarray[0]];
+    leaderbord2score.innerText = state.top[topkeyarray[1]];
+    leaderbord3score.innerText = state.top[topkeyarray[2]];
+    leaderbord1user.innerText = topkeyarray[0];
+    leaderbord2user.innerText = topkeyarray[1];
+    leaderbord3user.innerText = topkeyarray[2];
+
+    //console.log(state.top);
 }
 
 //paint each food 

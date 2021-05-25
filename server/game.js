@@ -96,8 +96,8 @@ class Game {
   }
 
   removePlayer(socket) {
-    delete this.sockets[socket.id];
     delete this.topplayers[this.players[socket.id].username];
+    delete this.sockets[socket.id];
     delete this.players[socket.id];
   }
 

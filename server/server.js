@@ -16,7 +16,11 @@ const game = new Game();
 
 //what server communication with client
 io.on('connection', client => {
-    game.state = initGame();
+
+    //check whether the game is started or not
+    if (!Object.keys(game.sockets).length){
+      game.state = initGame();
+    };
 
     //server have to listen client side action
     client.on('keydown', handleKeydown); 

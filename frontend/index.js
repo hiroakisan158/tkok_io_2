@@ -16,6 +16,7 @@ socket.on('gameOver', handleGameOver);
 
 const gameScreen = document.getElementById('gameScreen');
 const gameSnakeSizeDisplay = document.getElementById('gameSnakeSizeDisplay');
+const gameSnakeNameDisplay = document.getElementById('gameSnakeNameDisplay');
 const gameSnakefinalSizeDisplay = document.getElementById('gameSnakefinalSizeDisplay');
 const initialScreen = document.getElementById('initialScreen');
 const newGameBtn = document.getElementById('newGameButton');
@@ -29,6 +30,8 @@ const leaderbord3user = document.getElementById('Number3user');
 const leaderbord1score = document.getElementById('Number1score');
 const leaderbord2score= document.getElementById('Number2score');
 const leaderbord3score = document.getElementById('Number3score');
+const gameRecorduser = document.getElementById('gameRecordUser');
+const gameRecordSize = document.getElementById('gameRecordSize');
 
 newGameBtn.addEventListener('click', newGame); //user's click initiate the function newGame
 retryGameBtn.addEventListener('click', retryGame); //when user click retry button 
@@ -99,6 +102,7 @@ function paintGame(state){
     
     //show snakesize under the canvas
     gameSnakeSizeDisplay.innerText = state.me.snakesize; 
+    gameSnakeNameDisplay.innerText = state.me.name; 
 
     //show leaderbord 
     //get key array of topplayers
@@ -122,7 +126,9 @@ function paintGame(state){
       leaderbord3user.innerText = null;
     };
 
-    //console.log(state.top);
+    gameRecorduser.innerText = state.record.username;
+    gameRecordSize.innerText = state.record.size;    
+
 }
 
 //paint each food 

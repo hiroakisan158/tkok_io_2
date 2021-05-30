@@ -11,7 +11,7 @@ class Game {
     this.topplayers = {};
     this.gamerecord = {
       username: "tkok",
-      score: 100,
+      size: 100,
     };
     setInterval(this.update.bind(this), 1000 / FRAME_RATE);
   }
@@ -58,6 +58,15 @@ class Game {
         size: item.size,
       },
     })));
+
+    //check gamerecord status
+    if(topplayers_array[0] !== undefined){
+      if(topplayers_array[0].size > this.gamerecord.size){
+        this.gamerecord.username = topplayers_array[0].username;
+        this.gamerecord.size = topplayers_array[0].size;
+      };
+    //console.log(this.gamerecord.size);
+    };
   
     // Check if any players are dead and if alive send player status to each player 
     Object.keys(this.sockets).forEach(playerID => {
@@ -156,72 +165,9 @@ class Game {
       food: this.state.food,
       gridsize: GRID_SIZE,
       top: this.topplayers,
+      record: this.gamerecord,
     };
   }
-
-  
-/*
-  //this method send updated players status to client. Heart beat for this game.
-  startGameInterval(client, state){
-    const intervalID = setInterval(() => {
-        const winner = this.gameLoop(state);
-
-        if (!winner){
-            client.emit('gameState', state); //if client doesn't win or lose, server send client state in Frame_Rate interval
-        } else {
-            client.emit('gameOver', state);
-            delete this.players[client.id];
-            clearInterval(intervalID); // no longer send game state to client because he is gameover
-        }
-    }, 1000 / FRAME_RATE);
-  }
-*/
-
-/*
-  //this method define the movement and live status of snake
-  gameLoop(state){
-    if (!state){
-          return;
-    }
-      
-    //update each player status 
-    for (let clientid of Object.keys(state.players)){
-      var player = state.players[clientid]
-      player.pos.x += player.vel.x;
-      player.pos.y += player.vel.y;
-
-      if (player.pos.x < 0 || player.pos.x > GRID_SIZE || player.pos.y < 0 || player.pos.y > GRID_SIZE){
-          return 2; //player one is lost
-      }
-
-      //when snake eat food the length increase by one
-      var i = 0 //i is the index number of food in state.food
-      for(let food of state.food){
-          if (food.x === player.pos.x && food.y === player.pos.y) {
-              player.snake.push({ ...player.pos });
-              player.pos.x += player.vel.x;
-              player.pos.y += player.vel.y;
-              player.snakesize += 1; //count the legth of the snake
-              this.randomFood(state, i); //send i to identify which food should be randmize
-          }
-          i = i + 1 //add index number
-      }
-
-      //lose if player hit his own body
-      if (player.vel.x || player.vel.y) {
-          for (let cell of player.snake) {
-            if (cell.x === player.pos.x && cell.y === player.pos.y) {
-              return 2; //the player is lose
-            }
-          }
-      
-          player.snake.push({ ...player.pos });
-          player.snake.shift();
-      }
-    }
-
-  }
-*/
 
 }
 

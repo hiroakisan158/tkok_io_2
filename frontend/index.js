@@ -99,13 +99,28 @@ function paintGame(state){
     
     //show snakesize under the canvas
     gameSnakeSizeDisplay.innerText = state.me.snakesize; 
+
+    //show leaderbord 
+    //get key array of topplayers
     topkeyarray = Object.keys(state.top);
-    leaderbord1score.innerText = state.top[topkeyarray[0]];
-    leaderbord2score.innerText = state.top[topkeyarray[1]];
-    leaderbord3score.innerText = state.top[topkeyarray[2]];
-    leaderbord1user.innerText = topkeyarray[0];
-    leaderbord2user.innerText = topkeyarray[1];
-    leaderbord3user.innerText = topkeyarray[2];
+    leaderbord1user.innerText = state.top[topkeyarray[0]].username;
+    leaderbord1score.innerText = state.top[topkeyarray[0]].size;
+
+    if(topkeyarray[1] !== undefined){
+      leaderbord2score.innerText = state.top[topkeyarray[1]].size;
+      leaderbord2user.innerText = state.top[topkeyarray[1]].username;
+    }else{
+      leaderbord2score.innerText = null;
+      leaderbord2user.innerText = null;
+    };
+
+    if(topkeyarray[2] !== undefined){
+      leaderbord3score.innerText = state.top[topkeyarray[2]].size;
+      leaderbord3user.innerText = state.top[topkeyarray[2]].username;
+    }else{
+      leaderbord3score.innerText = null;
+      leaderbord3user.innerText = null;
+    };
 
     //console.log(state.top);
 }

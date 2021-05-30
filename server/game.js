@@ -9,6 +9,10 @@ class Game {
     this.players = {};
     this.state = {}; 
     this.topplayers = {};
+    this.gamerecord = {
+      username: "tkok",
+      score: 100,
+    };
     setInterval(this.update.bind(this), 1000 / FRAME_RATE);
   }
 
@@ -31,7 +35,10 @@ class Game {
       player.update(this.state);
 
       //add or insert updated snakesize topplayers array [key: username, value: snakesize]
-      this.topplayers[player.username] = player.snakesize;
+      this.topplayers[playerID] = {
+        username: player.username,
+        size: player.snakesize,
+      };
     });
 
     //Update state. 
@@ -40,11 +47,16 @@ class Game {
 
     //Arrange topplayers objects in decending order
     //topplayers is not array so change to array once and sort and back to object
-    var topplayers_array = Object.keys(this.topplayers).map((k)=>({ key: k, value: this.topplayers[k] }));
-    topplayers_array.sort((a, b) =>  b.value - a.value);
-
+    //change topplayers object to array
+    var topplayers_array = Object.keys(this.topplayers).map((k)=>({ socketid: k, username: this.topplayers[k].username, size: this.topplayers[k].size }));
+    //sort array
+    topplayers_array.sort((a, b) =>  b.size - a.size);
+    //back to object so that it can be removed by using socketid after gameover
     this.topplayers = Object.assign({}, ...topplayers_array.map((item) => ({
-      [item.key]: item.value,
+      [item.socketid]: {
+        username: item.username,
+        size: item.size,
+      },
     })));
   
     // Check if any players are dead and if alive send player status to each player 
@@ -96,7 +108,7 @@ class Game {
   }
 
   removePlayer(socket) {
-    delete this.topplayers[this.players[socket.id].username];
+    delete this.topplayers[socket.id];
     delete this.sockets[socket.id];
     delete this.players[socket.id];
   }

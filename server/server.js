@@ -1,6 +1,6 @@
+const httpServer = require("http").createServer();
 
 //////////////////change when testing localy //////////////////
-const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {
   cors: {
     //origin: "http://127.0.0.1:8080",

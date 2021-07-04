@@ -59,7 +59,7 @@ class Game {
       },
     })));
 
-    //check gamerecord status
+    //update gamerecord status
     if(topplayers_array[0] !== undefined){
       if(topplayers_array[0].size > this.gamerecord.size){
         this.gamerecord.username = topplayers_array[0].username;
@@ -164,7 +164,7 @@ class Game {
       others: OtherPlayers.map(p => p.serializeForUpdate()),
       food: this.state.food,
       gridsize: GRID_SIZE,
-      top: this.topplayers,
+      top: Object.keys(this.topplayers).map((k)=>({ socketid: k, username: this.topplayers[k].username, size: this.topplayers[k].size })),
       record: this.gamerecord,
     };
   }

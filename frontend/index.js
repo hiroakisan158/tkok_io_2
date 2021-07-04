@@ -106,21 +106,20 @@ function paintGame(state){
 
     //show leaderbord 
     //get key array of topplayers
-    topkeyarray = Object.keys(state.top);
-    leaderbord1user.innerText = state.top[topkeyarray[0]].username;
-    leaderbord1score.innerText = state.top[topkeyarray[0]].size;
+    leaderbord1user.innerText = state.top[0].username;
+    leaderbord1score.innerText = state.top[0].size;
 
-    if(topkeyarray[1] !== undefined){
-      leaderbord2score.innerText = state.top[topkeyarray[1]].size;
-      leaderbord2user.innerText = state.top[topkeyarray[1]].username;
+    if(state.top[1] !== undefined){
+      leaderbord2score.innerText = state.top[1].size;
+      leaderbord2user.innerText = state.top[1].username;
     }else{
       leaderbord2score.innerText = null;
       leaderbord2user.innerText = null;
     };
 
-    if(topkeyarray[2] !== undefined){
-      leaderbord3score.innerText = state.top[topkeyarray[2]].size;
-      leaderbord3user.innerText = state.top[topkeyarray[2]].username;
+    if(state.top[2] !== undefined){
+      leaderbord3score.innerText = state.top[2].size;
+      leaderbord3user.innerText = state.top[2].username;
     }else{
       leaderbord3score.innerText = null;
       leaderbord3user.innerText = null;

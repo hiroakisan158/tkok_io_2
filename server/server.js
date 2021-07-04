@@ -5,6 +5,7 @@ const io = require("socket.io")(httpServer, {
   cors: {
     //origin: "http://127.0.0.1:8080",
     origin: "https://stoic-jackson-807da6.netlify.app",
+    //origin: "*",
     methods: ["GET", "POST"],
   }
 });
@@ -23,8 +24,12 @@ io.on('connection', client => {
       game.state = initGame();
     };
 
+    var client_ip_address = client.request.connection.remoteAddress;
+    console.log(client_ip_address);
+
     //server have to listen client side action
-    client.on('keydown', handleKeydown); 
+    client.on('keydown', handleKeydown);
+    client.on('stickmove', handleStickmove); 
     client.on('newGame', handleNewGame);
     client.on('retryGame', handleRetryGame);
 
@@ -47,6 +52,20 @@ io.on('connection', client => {
           return;
         }
     }
+
+    function handleStickmove(xy) {
+      //get joystick movement from mobile apps. xy is like (-1, 0)
+      const vel = JSON.parse(xy);
+      console.log(vel)
+
+      try {
+      if (vel) {
+        game.state.players[this.id].vel = vel;
+      }
+      } catch(e) {
+        return;
+      }
+  }
 
     function handleNewGame(userinfo){
       parsed_userinfo = JSON.parse(userinfo);
